@@ -1,3 +1,1 @@
 image: p3terx/gitpod-openwrt
-tasks:
-  - command: zsh

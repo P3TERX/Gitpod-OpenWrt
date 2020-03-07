@@ -32,4 +32,5 @@ RUN mkdir -p ~/.antigen && \
     curl -fsSL git.io/oh-my-tmux.sh | bash && \
     mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh && \
-    zsh ~/.zshrc
+    zsh ~/.zshrc && \
+    echo "bash -c zsh" >> ~/.bashrc
