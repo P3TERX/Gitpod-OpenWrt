@@ -1,20 +1,18 @@
-#==================================================
-# https://github.com/P3TERX/openwrt-build-env
-# Description: OpenWrt build environment in docker
+#=================================================
+# https://github.com/P3TERX/Gitpod-OpenWrt
+# Description: OpenWrt build environment in Gitpod
 # Lisence: MIT
 # Author: P3TERX
-# Blog: https://p3terx.com (chinese)
-#==================================================
+# Blog: https://p3terx.com
+#=================================================
 name: Docker images publish
 
 on:
-  release:
-    types: published
+  repository_dispatch:
+    types: [Manual*, Auto*]
   push:
     paths:
       - 'Dockerfile'
-  schedule:
-    - cron: 20 22 * * 5
 
 jobs:
   publish:
@@ -25,40 +23,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Install buildx
-      run: |
-        curl -s https://api.github.com/repos/docker/buildx/releases/latest \
-        | grep "browser_download_url.*buildx-*.*linux-amd64" \
-        | cut -d : -f 2,3 \
-        | tr -d \" \
-        | wget -qi -
-        mkdir -p ~/.docker/cli-plugins/
-        mv buildx* ~/.docker/cli-plugins/docker-buildx
-        chmod +x ~/.docker/cli-plugins/docker-buildx
-
-    - name: Set up buildx
-      run: |
-        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-        docker buildx create --use --name multi-arch-builder
-
-    - name: Available platforms
-      run: |
-        docker buildx inspect --bootstrap | grep Platforms
-
-    - name: Login to Docker Hub
-      run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
     - name: Build and push
-      env:
-        PLATFORMS: linux/amd64
-        IMAGE_NAME: p3terx/gitpod-openwrt
-        IMAGE_TAG: latest
-        DOCKERFILE: Dockerfile
-        FILE_PATH: .
-      run: |
-        docker buildx build --push \
-          --platform ${PLATFORMS} \
-          -t ${IMAGE_NAME}:${IMAGE_TAG} \
-          -f ${DOCKERFILE} \
-          ${FILE_PATH}
+      uses: docker/build-push-action@v1
+      with:
+        push: true
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: p3terx/gitpod-openwrt
+        tags: latest
+        dockerfile: Dockerfile
+        path: .
