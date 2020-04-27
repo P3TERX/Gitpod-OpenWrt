@@ -26,11 +26,8 @@ WORKDIR /home/gitpod
 
 RUN sudo echo "Running 'sudo' for Gitpod: success"
 
-RUN mkdir -p ~/.antigen && \
-    curl -fsSL git.io/antigen > ~/.antigen/antigen.zsh && \
-    curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.zshrc > ~/.zshrc && \
-    curl -fsSL git.io/oh-my-tmux.sh | bash && \
-    mkdir -p ~/.ssh && \
+RUN mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh && \
-    zsh ~/.zshrc && \
+    curl -fsSL git.io/oh-my-zsh.sh | bash && \
+    curl -fsSL git.io/oh-my-tmux.sh | bash && \
     echo "bash -c zsh" >> ~/.bashrc
