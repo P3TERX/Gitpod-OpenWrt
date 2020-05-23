@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-FROM p3terx/openwrt-build-env:18.04
+FROM p3terx/openwrt-build-env:20.04
 
 LABEL maintainer P3TERX
 
