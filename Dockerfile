@@ -1,14 +1,9 @@
-#=================================================
 # https://github.com/P3TERX/Gitpod-OpenWrt
-# Description: OpenWrt build environment in Gitpod
-# Lisence: MIT
-# Author: P3TERX
-# Blog: https://p3terx.com
-#=================================================
+# OpenWrt build environment in Gitpod
+# MIT License
+# Copyright (c) 2020 P3TERX <https://p3terx.com>
 
 FROM p3terx/openwrt-build-env:20.04
-
-LABEL maintainer P3TERX
 
 USER root
 
