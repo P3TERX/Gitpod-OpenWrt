@@ -25,4 +25,9 @@ RUN mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh && \
     curl -fsSL git.io/oh-my-zsh.sh | bash && \
     curl -fsSL git.io/oh-my-tmux.sh | bash && \
-    echo "bash -c zsh" >> ~/.bashrc
+    echo "bash -c zsh" >> ~/.bashrc && \
+    mkdir ~/.cache && sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+
+ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/" \
+    MANPATH="$MANPATH:/home/linuxbrew/.linuxbrew/share/man" \
+    INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
